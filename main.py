@@ -1,71 +1,68 @@
 import matplotlib.pyplot as plt
-dv = 0.0001
-V = 0.001
+#Задаем изначальные условия в виде переменных
+dv = 1
+V = 10
 nu = 2
 R = 8.31
 T = 320
-#пусть А = 1
-A = 1
+print("Условие: 11.3. Газ, взятый в количестве 2 моль, занимает объем 1 л при температуре 320 К.")
+print("Сначала газ изобарно расширяется до объема 2,5 л, а затем расширяется изотермически до объема 7 л.")
+print("Определите давление и температуру в конце процесса, а также совершенную газом работу. Постройте графики в осях.")
+#Далее выводим в консоль условие и считаем изначальное давление
+A = 0
 B = nu * R
 p0 = B * T / V
-p = p0
-i = 1
-while V < 0.0025:
+P = p0
+i = 0
+#Введем массивы чтобы рисовать с них графики
+t = [0] * 60
+v = [0] * 60
+p = [0] * 60
+#я домножил на десятки, чтобы убрать float
+#далее переходим к циклам
+print("A  = ")
+while V < 25:
+# считаем по формулам
     V = V+dv
-    i = i+1
-    p = p0
-    T = p*V/B
-    A = A + p * dv
-    plt.scatter(V, p)
-    plt.pause(0.05)
-while V < 0.007:
-    V = V + dv
+    T = P*V/B
+    A = A + P * dv
+# вносим переменные в список
+    v[i] = V
+    p[i] = round(P)
+    t[i] = round(T)
     i = i + 1
-    p = B * T / V
-    A = A + p * dv
-    plt.scatter(V, p)
-    plt.pause(0.05)
-    plt.grid(True)
-    plt.title("p(V)")
-plt.show()
-V = 0.001
-while V < 0.0025:
-    V = V+dv
-    i = i+1
-    p = p0
-    T = p*V/B
-    A = A + p * dv
-    plt.scatter(T, V)
-    plt.pause(0.05)
-while V < 0.007:
+#выводим значение работы
+    print(round(A))
+#новый цикл, в других условиях
+while V < 70:
+#считаем по формулам
     V = V + dv
+    P = B * T / V
+    A = A + P * dv
+    #вносим переменные в список
+    v[i] = V
+    p[i] = round(P)
+    t[i] = round(T)
     i = i + 1
-    p = B * T / V
-    A = A + p * dv
-    plt.scatter(T, V)
-    plt.pause(0.05)
-    plt.grid(True)
-    plt.title("V(T)")
+#выводим значение работы
+    print(round(A))
+#выводим значение остальных переменных(объем, давление, температура
+print("V = "+str(v),"\n"+"P = "+str(p), "\n"+"T = "+str(t))
+#рисуем график p(V)
+plt.plot(v, p, label=' По оси ОХ: P \n По оси ОУ: V ')
+plt.title("график p(V)")
+plt.grid(True)
+plt.legend()
 plt.show()
-
-V = 0.001
-while V < 0.0025:
-    V = V+dv
-    i = i+1
-    p = p0
-    T = p*V/B
-    A = A + p * dv
-    plt.scatter(T, p)
-    plt.pause(0.05)
-while V < 0.007:
-    V = V + dv
-    i = i + 1
-    p = B * T / V
-    A = A + p * dv
-    plt.scatter(T, p)
-    plt.pause(0.05)
-    plt.grid(True)
-    plt.title("p(T)")
+#рисуем график V(T)
+plt.plot(t, v, label=' По оси ОХ: V \n По оси ОУ: T ')
+plt.title("график V(T)")
+plt.grid(True)
+plt.legend()
 plt.show()
-
-
+#рисуем график p(T)
+plt.plot(t, p, label=' По оси ОХ: P \n По оси ОУ: T ')
+plt.title("график p(T)")
+plt.grid(True)
+plt.legend()
+plt.show()
